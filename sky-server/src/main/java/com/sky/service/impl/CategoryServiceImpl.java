@@ -49,13 +49,13 @@ public class CategoryServiceImpl implements CategoryService {
         //设置状态，1正常 0锁定
         category.setStatus(StatusConstant.ENABLE);
 
-        //设置当前创建时间和修改时间
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-
-        //设置当前创建记录人id和修改人id
-        category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
+//        //设置当前创建时间和修改时间
+//        category.setCreateTime(LocalDateTime.now());
+//        category.setUpdateTime(LocalDateTime.now());
+//
+//        //设置当前创建记录人id和修改人id
+//        category.setCreateUser(BaseContext.getCurrentId());
+//        category.setUpdateUser(BaseContext.getCurrentId());
 
         //向数据库中插入数据 insert
         categoryMapper.insert(category);
@@ -71,13 +71,12 @@ public class CategoryServiceImpl implements CategoryService {
     public PageResult categoryPageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
 
         PageHelper.startPage(categoryPageQueryDTO.getPage(),categoryPageQueryDTO.getPageSize());
-
         Page<Category> page =  categoryMapper.pageQuery(categoryPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
 
-//        long total = page.getTotal();
+        //        long total = page.getTotal();
 //        List<Category> records = page.getResult();
 //        return new PageResult(total,records);
-        return new PageResult(page.getTotal(), page.getResult());
     }
 
     /**
@@ -145,8 +144,9 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(categoryDTO, category);
 
         category.setStatus(StatusConstant.ENABLE);
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+
+//        category.setUpdateTime(LocalDateTime.now());
+//        category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.update(category);
 
