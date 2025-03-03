@@ -109,8 +109,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
-        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
 
+        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
 
         Page<Employee> page =  employeeMapper.pageQuery(employeePageQueryDTO);
 
@@ -161,6 +161,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPassword("****");
         return employee;
     }
+
+
 
 
 }
