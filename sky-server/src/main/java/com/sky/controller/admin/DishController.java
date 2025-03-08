@@ -67,7 +67,7 @@ public class DishController {
      * @return
      */
     @PostMapping("/status/{status}")
-    public Result DishStartOrStop(@PathVariable Integer status,long id){
+    public Result<String> DishStartOrStop(@PathVariable Integer status,long id){
         log.info("菜品的起售，停售:{},{}",status,id);
         dishService.DishStartOrStop(status,id);
         return Result.success();

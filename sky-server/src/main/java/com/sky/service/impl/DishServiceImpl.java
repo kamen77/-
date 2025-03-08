@@ -128,13 +128,13 @@ public class DishServiceImpl implements DishService {
     public void DishStartOrStop(Integer status, long id) {
 
         Dish dish = Dish.builder()
-                .status(status)
                 .id(id)
+                .status(status)
                 .build();
         dishMapper.update(dish);
 
         // 如果是停售操作，还需要将包含当前菜品的套餐也停售
-        if(status==StatusConstant.ENABLE){
+        if(status==StatusConstant.DISABLE){
             List<Long> dishIds = new ArrayList<>();
             dishIds.add(id);
         // select setmeal_id from setmeal_dish where dish_id in (?,?,?)
