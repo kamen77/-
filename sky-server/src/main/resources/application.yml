@@ -18,7 +18,6 @@ spring:
     password: ${sky.redis.password}
     database: ${sky.redis.database}
 
-
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
@@ -49,4 +48,5 @@ sky:
     user-ttl: 7200000000
     # 设置前端传递过来的令牌名称
     user-token-name: authentication
+
 
