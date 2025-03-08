@@ -3,11 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.SetMealDishMapper">
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into setmeal (category_id, name, price, description, image, create_time, update_time, create_user, update_user)
-        VALUES
-            (#{categoryId},#{name},#{price},#{description},#{image},#{createTime},#{updateTime},#{createUser},#{updateUser})
-    </insert>
 
     <insert id="insertBatch" parameterType="list">
         insert into setmeal_dish (setmeal_id, dish_id, name, price, copies)

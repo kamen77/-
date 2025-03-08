@@ -20,13 +20,6 @@ public interface SetMealDishMapper {
      */
     List<Long> getSetMealIdsByDishIds(List<Long> dishIds);
 
-    /**
-     * 新增套餐，同时需要保存套餐和菜品的关联关系
-     * @param
-     * @return
-     */
-    @AutoFill(value = OperationType.INSERT)
-    void insert(Setmeal setmeal);
 
     /**
      *  保存套餐和菜品的关联关系
