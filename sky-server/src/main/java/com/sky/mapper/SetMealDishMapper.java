@@ -4,6 +4,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.enumeration.OperationType;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -26,4 +27,11 @@ public interface SetMealDishMapper {
      * @param setmealDishes
      */
     void insertBatch(List<SetmealDish> setmealDishes);
+
+    /**
+     * 删除套餐菜品关系表中的数据
+     * @param setMealId
+     */
+    @Delete("delete from setmeal_dish where id = #{setMealId}")
+    void deleteBySetMealId(Long setMealId);
 }
