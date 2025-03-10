@@ -42,4 +42,12 @@ public interface SetMealService {
      * @return
      */
     SetmealVO getByIdWithDish(long id);
+
+
+    /**
+     * 套餐起售停售
+     * @param id
+     * @return
+     */
+    void startOrStop(long id, Integer status);
 }
