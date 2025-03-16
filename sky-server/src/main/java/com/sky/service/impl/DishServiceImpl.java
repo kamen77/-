@@ -218,6 +218,7 @@ public class DishServiceImpl implements DishService {
         return dishMapper.list(dish);
     }
 
+
     /**
      * 条件查询菜品和口味
      * @param dish
@@ -241,6 +242,7 @@ public class DishServiceImpl implements DishService {
 
         return dishVOList;
     }
+
 
 
 }
