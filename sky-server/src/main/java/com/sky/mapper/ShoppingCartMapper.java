@@ -2,14 +2,11 @@ package com.sky.mapper;
 
 
 import com.sky.entity.ShoppingCart;
-import com.sky.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
-
 
 @Mapper
 public interface ShoppingCartMapper {
@@ -20,7 +17,6 @@ public interface ShoppingCartMapper {
      * @return
      */
     List<ShoppingCart> list(ShoppingCart shoppingCart);
-
 
     /**
      * 根据id修改商品数量
