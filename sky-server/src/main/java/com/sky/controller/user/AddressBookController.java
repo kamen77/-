@@ -31,7 +31,6 @@ public class AddressBookController {
         AddressBook addressBook = new AddressBook();
         addressBook.setUserId(BaseContext.getCurrentId());
         List<AddressBook> list = addressBookService.list(addressBook);
-        log.info("地址信息：{}",list);
         return Result.success(list);
     }
 
@@ -44,6 +43,30 @@ public class AddressBookController {
     @ApiOperation("新增地址")
     public Result save(@RequestBody AddressBook addressBook){
         addressBookService.save(addressBook);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询地址
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询地址")
+    public Result<AddressBook> getById(@PathVariable long id){
+        AddressBook addressBook = addressBookService.getById(id);
+        return Result.success(addressBook);
+    }
+
+    /**
+     * 根据id修改地址
+     * @param
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("根据id修改地址")
+    public Result update(@RequestBody AddressBook addressBook){
+        addressBookService.update(addressBook);
         return Result.success();
     }
 

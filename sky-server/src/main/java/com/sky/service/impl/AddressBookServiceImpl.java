@@ -16,8 +16,8 @@ public class AddressBookServiceImpl implements AddressBookService {
     private AddressBookMapper addressBookMapper;
 
     /**
-     * 查询当前登录用户的所有地址信息
-     *
+     * 条件查询
+     * @param addressBook
      * @return
      */
     @Override
@@ -33,8 +33,30 @@ public class AddressBookServiceImpl implements AddressBookService {
      */
     @Override
     public void save(AddressBook addressBook) {
-        addressBook.setIsDefault(0);
         addressBook.setUserId(BaseContext.getCurrentId());
-        addressBookMapper.save(addressBook);
+        addressBook.setIsDefault(0);
+        addressBookMapper.insert(addressBook);
     }
+
+    /**
+     * 根据id查询地址
+     * @param id
+     * @return
+     */
+    @Override
+    public AddressBook getById(long id) {
+        return addressBookMapper.getById(id);
+    }
+
+    /**
+     * 根据id修改地址
+     * @param
+     * @return
+     */
+    @Override
+    public void update(AddressBook addressBook) {
+        addressBookMapper.update(addressBook);
+    }
+
+
 }
