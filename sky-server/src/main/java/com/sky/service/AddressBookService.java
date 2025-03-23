@@ -26,7 +26,7 @@ public interface AddressBookService {
      * @param id
      * @return
      */
-    AddressBook getById(long id);
+    AddressBook getById(Long id);
 
     /**
      * 根据id修改地址
@@ -34,4 +34,18 @@ public interface AddressBookService {
      * @return
      */
     void update(AddressBook addressBook);
+
+    /**
+     * 设置默认地址
+     * @param addressBook
+     * @return
+     */
+    void setDefault(AddressBook addressBook);
+
+    /**
+     * 根据id删除地址
+     * @param id
+     * @return
+     */
+    void deleteById(Long id);
 }
