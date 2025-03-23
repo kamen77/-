@@ -15,7 +15,7 @@ public interface AddressBookMapper {
     List<AddressBook> list(AddressBook addressBook);
 
     /**
-     * 新增地址
+     * 新增
      * @param addressBook
      */
     @Insert("insert into address_book" +
@@ -25,14 +25,13 @@ public interface AddressBookMapper {
             "                #{districtCode}, #{districtName}, #{detail}, #{label}, #{isDefault})")
     void insert(AddressBook addressBook);
 
-
     /**
-     * 根据id查询地址
+     * 根据id查询
      * @param id
      * @return
      */
     @Select("select * from address_book where id = #{id}")
-    AddressBook getById(long id);
+    AddressBook getById(Long id);
 
     /**
      * 根据id修改
@@ -47,12 +46,11 @@ public interface AddressBookMapper {
     @Update("update address_book set is_default = #{isDefault} where user_id = #{userId}")
     void updateIsDefaultByUserId(AddressBook addressBook);
 
-
     /**
      * 根据id删除地址
      * @param id
-     * @return
      */
     @Delete("delete from address_book where id = #{id}")
     void deleteById(Long id);
+
 }

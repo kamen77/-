@@ -4,21 +4,21 @@ import com.sky.context.BaseContext;
 import com.sky.entity.AddressBook;
 import com.sky.mapper.AddressBookMapper;
 import com.sky.service.AddressBookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
+@Slf4j
 public class AddressBookServiceImpl implements AddressBookService {
-
     @Autowired
     private AddressBookMapper addressBookMapper;
 
-
     /**
      * 条件查询
+     *
      * @param addressBook
      * @return
      */
@@ -26,13 +26,11 @@ public class AddressBookServiceImpl implements AddressBookService {
         return addressBookMapper.list(addressBook);
     }
 
-
     /**
      * 新增地址
+     *
      * @param addressBook
-     * @return
      */
-    @Override
     public void save(AddressBook addressBook) {
         addressBook.setUserId(BaseContext.getCurrentId());
         addressBook.setIsDefault(0);
@@ -40,27 +38,28 @@ public class AddressBookServiceImpl implements AddressBookService {
     }
 
     /**
-     * 根据id查询地址
+     * 根据id查询
+     *
      * @param id
      * @return
      */
-    @Override
     public AddressBook getById(Long id) {
-        return addressBookMapper.getById(id);
+        AddressBook addressBook = addressBookMapper.getById(id);
+        return addressBook;
     }
 
     /**
      * 根据id修改地址
-     * @param
-     * @return
+     *
+     * @param addressBook
      */
-    @Override
     public void update(AddressBook addressBook) {
         addressBookMapper.update(addressBook);
     }
 
     /**
      * 设置默认地址
+     *
      * @param addressBook
      */
     @Transactional
@@ -77,14 +76,11 @@ public class AddressBookServiceImpl implements AddressBookService {
 
     /**
      * 根据id删除地址
+     *
      * @param id
-     * @return
      */
-    @Override
     public void deleteById(Long id) {
         addressBookMapper.deleteById(id);
     }
-
-
 
 }
