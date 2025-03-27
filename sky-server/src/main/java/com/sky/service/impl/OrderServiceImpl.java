@@ -1,18 +1,16 @@
 package com.sky.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
+import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
-import com.sky.entity.AddressBook;
-import com.sky.entity.OrderDetail;
-import com.sky.entity.Orders;
-import com.sky.entity.ShoppingCart;
+import com.sky.entity.*;
 import com.sky.exception.AddressBookBusinessException;
-import com.sky.mapper.AddressBookMapper;
-import com.sky.mapper.OrderDetailMapper;
-import com.sky.mapper.OrderMapper;
-import com.sky.mapper.ShoppingCartMapper;
+import com.sky.mapper.*;
 import com.sky.service.OrderService;
+import com.sky.utils.WeChatPayUtil;
+import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
+
+    @Autowired
+    private WeChatPayUtil weChatPayUtil;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 用户下单
@@ -99,5 +103,58 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         return orderSubmitVO;
+    }
+
+    /**
+     * 订单支付
+     * @param ordersPaymentDTO
+     * @return
+     */
+    @Override
+    public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) {
+        // 当前登录用户id
+        Long userId = BaseContext.getCurrentId();
+        User user = userMapper.getById(userId);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", "ORDERPAID");
+
+        OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
+        vo.setPackageStr(jsonObject.getString("package"));
+
+        // 替代微信支付成功后的数据库订单状态更新，直接在这里更新了
+        // 根据订单号查询当前用户的该订单
+        Orders ordersDB = orderMapper.getByNumberAndUserId(ordersPaymentDTO.getOrderNumber(), userId);
+
+        // 根据订单id更新订单的状态、支付方式、支付状态、结账时间
+        Orders orders=new Orders();
+        orders.setId(ordersDB.getId());
+        orders.setStatus(Orders.TO_BE_CONFIRMED);
+        orders.setPayStatus(Orders.PAID);
+        orders.setCheckoutTime(LocalDateTime.now());
+
+        orderMapper.update(orders);
+
+        return vo;
+    }
+
+    /**
+     * 支付成功，修改订单状态
+     * @param outTradeNo
+     */
+    @Override
+    public void paySuccess(String outTradeNo) {
+        // 根据订单号查询订单
+        Orders ordersDB = orderMapper.getByNumber(outTradeNo);
+
+        // 根据订单id更新订单的状态、支付方式、支付状态、结账时间
+        Orders orders = Orders.builder()
+                .id(ordersDB.getId())
+                .status(Orders.TO_BE_CONFIRMED)
+                .payStatus(Orders.PAID)
+                .checkoutTime(LocalDateTime.now())
+                .build();
+
+        orderMapper.update(orders);
     }
 }
