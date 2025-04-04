@@ -56,17 +56,19 @@ public class WebSocketServer {
 
     /**
      * 群发
+     *
      * @param message
      */
-    public void sendAllClient(String message) {
+    public void sendToAllClient(String message) {
         Collection<Session> sessions = sessionMap.values();
         for (Session session : sessions) {
-                try {
-                    //服务器向客户端发送消息
-                    session.getBasicRemote().sendText(message);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            try {
+                //服务器向客户端发送消息
+                session.getBasicRemote().sendText(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
 }

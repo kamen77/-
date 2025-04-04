@@ -21,6 +21,6 @@ public class WebSocketTask {
      */
     @Scheduled(cron = "0/60 * * * * ?")
     public void sendMessageToClient(){
-        webSocketServer.sendAllClient("这是来自服务端的消息" + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now()));
+        webSocketServer.sendToAllClient("这是来自服务端的消息" + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now()));
     }
 }
